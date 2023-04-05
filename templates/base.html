@@ -25,6 +25,11 @@
     </head>
 
     <body>
+       
+
+        
+
+       
 
         {% include 'navbar.html' %}
 
@@ -135,5 +140,23 @@
         
         <!-- Template Javascript -->
         <script src="{% static 'js/main.js' %}"></script>
+
+         <!-- the messages to disappear after a little bit, Requires JQuery -->
+         <script>
+            {% comment %} $('.messages').hide().fadeIn(500).delay(2000).fadeOut(500);   {% endcomment %}
+            $('.messages').removeClass('hide');  
+            $('.messages').addClass('show');   
+            $('.messages').addClass('showAlert');   
+            setTimeout(function(){
+                $('.messages').removeClass('save');  
+                $('.messages').addClass('hide');  
+            },5000);
+
+            $('.close-btn').click(function(){
+                $('.messages').removeClass('save');  
+                $('.messages').addClass('hide');  
+            });
+            
+         </script>
     </body>
 </html>
