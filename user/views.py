@@ -9,17 +9,11 @@ def loginView(request):
     form = loginForm()
 
     if request.method == "POST":
-        # form = loginForm(request.POST)
-
-        # print(form)
-        # email = form.email
-        # password = form.password
+        
 
         email = request.POST.get('email')
         password = request.POST.get('password')
-        print(email)
-        print(password)
-
+    
         try:
             user = User.objects.get(email=email)
         except:
@@ -46,7 +40,19 @@ def logoutView(request):
     return redirect('home')
 
 def registerView(request):
-    form = registrationForm()
+    if request.method == "POST":
+        form = registrationForm(request.POST)
+        
+        # user = form.save(commit=False)
+        if form.is_valid():
+            new_user = form.save(commit=False)
+            new_user.username = new_user.email
+            print(new_user.username)
+            new_user.save()
+            return redirect('login')
+
+    else:
+        form = registrationForm()
 
     context = {
         'form': form,
