@@ -133,6 +133,9 @@ AUTH_USER_MODEL = 'user.User'
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
+LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = 'login'
+
 
 # Email Configuration
 EMAIL_HOST = config('EMAIL_HOST')

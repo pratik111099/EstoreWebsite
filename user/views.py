@@ -1,7 +1,7 @@
 from Estorewebsite import settings
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .forms import loginForm, registrationForm
+from .forms import loginForm, registrationForm, userPasswordResetForm
 from .models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -102,3 +102,60 @@ def activateEmailView(request, uidb64, token):
     
     else:
         return HttpResponse('Activation failed, Please try again!!!')
+    
+
+def userPasswordRestView(request):
+    if request.method == "POST":
+        form = userPasswordResetForm(request.POST)
+        if form.is_valid():
+            email = request.POST.get('email')
+            user = User.objects.get(email=email)
+            current_site = get_current_site(request)
+            subject = 'Welcome to EStore'
+            message = render_to_string('user/resetpasswordemail.html',{
+                      'name': user.first_name,
+                      'domain': current_site.domain,
+                      'uid': urlsafe_base64_encode(force_bytes(user.id)),
+                      'token': generate_token.make_token(user)
+            })
+
+            email = EmailMessage(
+                subject,
+                message,
+                settings.EMAIL_HOST_USER,
+                [user.email],
+            )
+            email.fail_silently = True
+            email.send()
+            return redirect('login')
+    else:
+        form = userPasswordResetForm()
+
+    context = {
+        'form': form
+    }
+    return render(request,'user/passwordreset.html', context)
+
+
+
+def userPasswordRestViewForm(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        myuser = User.objects.get(id=uid)
+
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        myuser = None
+
+    if request.method == "POST":
+        password = request.POST.get( 'password')
+        print(password)
+        myuser.set_password(password)
+        myuser.save()
+        return redirect('login')
+
+    elif myuser is not None and generate_token.check_token(myuser, token):
+        return render(request, 'user/passwordresetform.html')
+    
+    else:
+        return HttpResponse('Activation failed, Please try again!!!')
+    

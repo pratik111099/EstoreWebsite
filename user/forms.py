@@ -1,6 +1,6 @@
 from django.forms import ModelForm, TextInput, EmailInput, NumberInput, PasswordInput
 from .models import User
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordResetForm
 
 class loginForm(ModelForm):
     class Meta:
@@ -53,3 +53,16 @@ class registrationForm(UserCreationForm):
                 }),
            
         }
+
+class userPasswordResetForm(PasswordResetForm):
+    class Meta:
+        model = User
+        fields = ['email', ]
+        widgets = {
+            'email': EmailInput(attrs={
+                'class': "form-control", 
+                'style': 'max-width: 300px;',
+                'placeholder': 'Enter Your Email'
+                }),
+        }
+        
