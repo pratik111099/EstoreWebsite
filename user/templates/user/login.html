@@ -61,9 +61,10 @@
                                         <div class="form-group">
                                             {{ form.password2 }}
                                         </div>
-                                        <div class="col-md-12">
+                                        <div class="col-md-12 pb-3">
                                             <button class="btn">Submit</button>
                                         </div>
+                                        <p>Have an account? <a href="{% url 'login' %}">Log In</a></p>
                                     </form>
 
                                 </div>
@@ -92,14 +93,17 @@
                                     
                             
                                     <div class="col-md-12">
-                                        <div class="custom-control custom-checkbox">
+                                        {% comment %} <div class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input" id="newaccount">
                                             <label class="custom-control-label" for="newaccount">Keep me signed in</label>
-                                        </div>
+                                        </div> {% endcomment %}
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-12 pb-3">
                                         <button class="btn">Submit</button>
                                     </div>
+                                    <p>Forgotten Password? <a href="{% url 'register' %}">Reset Password</a></p>
+                                    <p>Don't have an account? <a href="{% url 'register' %}">Sign up</a></p>
+                                    
                                 </form>
                                 
                             </div>

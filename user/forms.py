@@ -51,16 +51,5 @@ class registrationForm(UserCreationForm):
                 'style': 'max-width: 300px;',
                 'placeholder': 'Mobile Number'
                 }),
-
-            # 'password1': PasswordInput(attrs={
-            #     'class': "form-control",
-            #     'style': 'max-width: 300px;',
-            #     'placeholder': 'Password'
-            #     }),
-
-            # 'password2': PasswordInput(attrs={
-            #     'class': "form-control",
-            #     'style': 'max-width: 300px;',
-            #     'placeholder': 'Confirm Password'
-            #     }),
+           
         }
