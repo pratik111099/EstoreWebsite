@@ -159,3 +159,7 @@ def userPasswordRestViewForm(request, uidb64, token):
     else:
         return HttpResponse('Activation failed, Please try again!!!')
     
+
+def myAccountView(request):
+    return render(request, 'user/my-account.html')
+    

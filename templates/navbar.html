@@ -48,7 +48,7 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link1 dropdown-toggle" data-toggle="dropdown">Hello, {{request.user.first_name }}</a>
                         <div class="dropdown-menu">
-                            <a href="" class="dropdown-item">My Account</a>
+                            <a href="{% url 'myaccount' %}" class="dropdown-item">My Account</a>
                             <a href="{% url 'logout' %}" class="dropdown-item">Logout</a>
                         </div>
                     </div>
