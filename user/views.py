@@ -1,7 +1,7 @@
 from Estorewebsite import settings
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .forms import loginForm, registrationForm, userPasswordResetForm
+from .forms import loginForm, registrationForm, userPasswordResetForm, UserUpdateForm, PasswordChangeForm
 from .models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -161,5 +161,39 @@ def userPasswordRestViewForm(request, uidb64, token):
     
 
 def myAccountView(request):
-    return render(request, 'user/my-account.html')
+    if request.method == "POST":
+        
+        form = UserUpdateForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'User upadted Successfully')
+            return redirect('myaccount')
+       
+           
+    else:
+        form = UserUpdateForm(instance=request.user)
+        form2 = PasswordChangeForm(request.user)
+    
+    
+    context={
+        'form':form,
+        'form2':form2,
+    }
+    return render(request, 'user/my-account.html', context)
+
+
+def ChangePasswordView(request):
+    if request.method == "POST":
+        form2 = PasswordChangeForm(request.user, request.POST)
+        if form2.is_valid():
+            form2.save()
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('login')
+        
+        else:
+            messages.warning(request, 'Invalid Password')
+            return redirect('myaccount')
+    return redirect('myaccount')
+
+    
     

@@ -32,18 +32,18 @@
                             <div class="tab-pane fade show active" id="dashboard-tab" role="tabpanel" aria-labelledby="dashboard-nav">
                                 <h4>Dashboard</h4>
                                 <p>
-                                    <div class="row">
+                                    {% comment %} <div class="row">
                                         <div class="col-md-6">
-                                            <input class="form-control" type="text" placeholder="First Name">
+                                            <input class="form-control" type="text" value="{{myuser.first_name}}" placeholder="First Name">
                                         </div>
                                         <div class="col-md-6">
-                                            <input class="form-control" type="text" placeholder="Last Name">
+                                            <input class="form-control" type="text" value="{{myuser.last_name}}" placeholder="Last Name">
                                         </div>
                                         <div class="col-md-6">
-                                            <input class="form-control" type="text" placeholder="Mobile">
+                                            <input class="form-control" type="text" value="{{myuser.mobile_number}}" placeholder="Mobile">
                                         </div>
                                         <div class="col-md-6">
-                                            <input class="form-control" type="text" placeholder="Email">
+                                            <input class="form-control" type="text" value="{{myuser.email}}" placeholder="Email">
                                         </div>
                                         <div class="col-md-12">
                                             <input class="form-control" type="text" placeholder="Address">
@@ -51,6 +51,45 @@
                                         <div class="col-md-12">
                                             <button class="btn">Update Account</button>
                                             <br><br>
+                                        </div>
+                                    </div> {% endcomment %}
+
+                                    <div class="row1"  >
+                                        <div>
+                                            {% if form.errors %}
+                                            <div class="alert alert-danger" role="alert">
+                                            <strong>Error:</strong> Please correct the errors below.
+                                            <ul>
+                                                {% for field in form %}
+                                                {% if field.errors %}
+                                                    <li>{{ field.label }}: {{ field.errors|join:", " }}</li>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+        
+                                        <div align="center">
+                                            <form action="" method="post">
+                                                {% csrf_token %}
+                                                
+                                                <div class="form-group">
+                                                    {{ form.first_name }}
+                                                </div>
+                                                <div class="form-group">
+                                                    {{ form.last_name }}
+                                                </div>
+                                                <div class="form-group">
+                                                    {{ form.email }}
+                                                </div>
+                                                <div class="form-group">
+                                                    {{ form.mobile_number }}
+                                                </div>
+                                                <div class="col-md-12 pb-3">
+                                                    <button class="btn">Update Account</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </p> 
@@ -122,20 +161,33 @@
                             </div>
                             <div class="tab-pane fade" id="account-tab" role="tabpanel" aria-labelledby="account-nav">
                                 <h4>Password change</h4>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <input class="form-control" type="password" placeholder="Current Password">
+                                <form method="POST" action="{% url 'changepass' %}">   
+                                    {% csrf_token %}    
+                                    {% comment %} <div class="row">
+                                        <div class="col-md-12">
+                                            <input class="form-control" type="password" name="password" placeholder="Current Password">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input class="form-control" type="text" name="newpassword" placeholder="New Password">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input class="form-control" type="text" name="newconfirmpassword" placeholder="Confirm Password">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <button class="btn">Save Changes</button>
+                                        </div>
+                                    </div> {% endcomment %}
+                                   
+                                    <div align="center">
+                                        <div>
+                                            {{form2.as_p}}
+                                        </div>
+                                        <div class="col-md-12">
+                                            <button class="btn" >Save Changes</button>
+                                        </div>
+                                        
                                     </div>
-                                    <div class="col-md-6">
-                                        <input class="form-control" type="text" placeholder="New Password">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input class="form-control" type="text" placeholder="Confirm Password">
-                                    </div>
-                                    <div class="col-md-12">
-                                        <button class="btn">Save Changes</button>
-                                    </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>

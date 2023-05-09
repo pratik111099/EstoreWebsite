@@ -12,4 +12,5 @@ urlpatterns = [
     path('passwordresetform/<uidb64>/<token>', views.userPasswordRestViewForm, name='passwordresetform'),
 
     path('myaccount/', views.myAccountView, name='myaccount'),
+    path('changepass/', views.ChangePasswordView, name='changepass'),
 ]

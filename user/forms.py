@@ -1,6 +1,7 @@
+from django import forms
 from django.forms import ModelForm, TextInput, EmailInput, NumberInput, PasswordInput
 from .models import User
-from django.contrib.auth.forms import UserCreationForm, PasswordResetForm
+from django.contrib.auth.forms import UserCreationForm, PasswordResetForm, PasswordChangeForm
 
 class loginForm(ModelForm):
     class Meta:
@@ -54,6 +55,7 @@ class registrationForm(UserCreationForm):
            
         }
 
+
 class userPasswordResetForm(PasswordResetForm):
     class Meta:
         model = User
@@ -63,6 +65,37 @@ class userPasswordResetForm(PasswordResetForm):
                 'class': "form-control", 
                 'style': 'max-width: 300px;',
                 'placeholder': 'Enter Your Email'
+                }),
+        }
+        
+        
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['email', 'first_name', 'last_name', 'mobile_number']
+        widgets = {
+            'first_name': TextInput(attrs={
+                'class': "form-control",
+                'style': 'max-width: 300px;',
+                'placeholder': 'First Name'
+                }),
+
+            'last_name': TextInput(attrs={
+                'class': "form-control",
+                'style': 'max-width: 300px;',
+                'placeholder': 'Last Name'
+                }),
+
+            'email': EmailInput(attrs={
+                'class': "form-control", 
+                'style': 'max-width: 300px;',
+                'placeholder': 'Email'
+                }),
+
+            'mobile_number': NumberInput(attrs={
+                'class': "form-control",
+                'style': 'max-width: 300px;',
+                'placeholder': 'Mobile Number'
                 }),
         }
         

@@ -11,4 +11,4 @@ class User(AbstractUser):
     mobile_number = models.IntegerField(null=True)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['username']
